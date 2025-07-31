@@ -1,0 +1,5 @@
+[phases.setup]
+nixPkgs = ["php83", "php83Packages.composer"]
+
+[phases.build]
+cmds = ["composer install", "npm install --production", "php artisan optimize", "php artisan config:cache", "php artisan view:cache", "php artisan migrate --force"]
