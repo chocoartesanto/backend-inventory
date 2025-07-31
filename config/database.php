@@ -44,12 +44,12 @@ return [
 
 'mysql' => [
     'driver' => 'mysql',
-    'url' => env('DATABASE_URL'),
-    'host' => env('DB_HOST', '127.0.0.1'),
+    'url' => env('DB_URL'),
+    'host' => env('DB_HOST', 'inventory.c858cws0y1hi.us-east-1.rds.amazonaws.com'),
     'port' => env('DB_PORT', '3306'),
-    'database' => env('DB_DATABASE', 'forge'),
-    'username' => env('DB_USERNAME', 'forge'),
-    'password' => env('DB_PASSWORD', ''),
+    'database' => env('DB_DATABASE', 'inventory'),
+    'username' => env('DB_USERNAME', 'admin'),
+    'password' => env('DB_PASSWORD', 'Admin123#,'),
     'unix_socket' => env('DB_SOCKET', ''),
     'charset' => env('DB_CHARSET', 'utf8mb4'),
     'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
@@ -58,12 +58,8 @@ return [
     'strict' => true,
     'engine' => null,
     'options' => [
-        PDO::ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-        PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
-        PDO::ATTR_EMULATE_PREPARES => true,
-        PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
-        // Esto resuelve el problema de caching_sha2_password
-        PDO::MYSQL_ATTR_SSL_MODE => PDO::MYSQL_SSL_MODE_DISABLED,
+        PDO::ATTR_EMULATE_PREPARES => false,
+        PDO::ATTR_STRINGIFY_FETCHES => false,
     ],
 ],
 
