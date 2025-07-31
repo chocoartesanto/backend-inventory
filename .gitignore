@@ -5,6 +5,7 @@
 .phpactor.json
 .phpunit.result.cache
 .env
+.env.*
 /.fleet
 /.idea
 /.nova
