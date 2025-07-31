@@ -62,8 +62,8 @@ return [
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES => false,
         // Configuración específica para caching_sha2_password
-        PDO::MYSQL_ATTR_SSL_MODE => PDO::MYSQL_SSL_MODE_DISABLED,
-        PDO::ATTR_PERSISTENT => false,
+        // PDO::MYSQL_ATTR_SSL_MODE => PDO::MYSQL_SSL_MODE_DISABLED,
+        // PDO::ATTR_PERSISTENT => false,
     ],
 ],
         'mariadb' => [
