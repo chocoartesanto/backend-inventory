@@ -19,11 +19,11 @@ class PurchaseDetail extends Model
         'subtotal',
     ];
 
-    protected $casts = [
-        'quantity' => 'decimal:2',
-        'unit_price' => 'decimal:2',
-        'subtotal' => 'decimal:2',
-    ];
+    // protected $casts = [
+    //     'cantidad' => 'decimal:2',
+    //     'precio_unitario' => 'decimal:2',
+    //     'subtotal' => 'decimal:2'
+    // ];
 
     /**
      * Relación con la compra principal

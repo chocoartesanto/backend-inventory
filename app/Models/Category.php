@@ -25,7 +25,6 @@ class Category extends Model
      * Los atributos que deben ser convertidos a tipos nativos.
      */
     protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'is_active' => 'boolean'
     ];
 }

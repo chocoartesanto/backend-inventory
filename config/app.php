@@ -127,6 +127,8 @@ return [
     ],
 
     'providers' => [
+        Bref\LaravelBridge\BrefServiceProvider::class,
+
         // Existing providers...
         // Removed: Spatie\Browsershot\BrowsershotServiceProvider::class,
     ],

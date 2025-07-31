@@ -18,7 +18,8 @@ class Domiciliario extends Model
     ];
 
     protected $casts = [
-        'tarifa' => 'decimal:2',
+        'fecha_ingreso' => 'date',
+        'fecha_salida' => 'date'
     ];
 
     protected $hidden = [

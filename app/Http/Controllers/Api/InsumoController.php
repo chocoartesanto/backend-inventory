@@ -7,6 +7,7 @@ use App\Services\InsumoService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
+// use Illuminate\Support\Facades\Log;
 
 class InsumoController extends Controller
 {
@@ -16,6 +17,22 @@ class InsumoController extends Controller
     public function store(Request $request): JsonResponse
     {
         try {
+
+
+
+            // \Log::info('Creación de Insumo - Datos recibidos', [
+            //     'nombre_insumo' => $request->input('nombre_insumo'),
+            //     'unidad' => $request->input('unidad'),
+            //     'cantidad_unitaria' => $request->input('cantidad_unitaria'),
+            //     'precio_presentacion' => $request->input('precio_presentacion'),
+            //     'cantidad_utilizada' => $request->input('cantidad_utilizada'),
+            //     'cantidad_por_producto' => $request->input('cantidad_por_producto'),
+            //     'stock_minimo' => $request->input('stock_minimo'),
+            //     'sitio_referencia' => $request->input('sitio_referencia')
+            // ]);
+
+
+
             // Validar datos de entrada
             $validator = Validator::make($request->all(), [
                 'nombre_insumo' => 'required|string|max:255|unique:insumos,nombre_insumo',

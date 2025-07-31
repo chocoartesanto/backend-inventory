@@ -15,11 +15,11 @@ return new class extends Migration
             // Agregar todas las columnas que faltan
             $table->string('nombre_insumo')->unique()->after('id');
             $table->string('unidad', 50)->after('nombre_insumo');
-            $table->decimal('cantidad_unitaria', 10, 2)->after('unidad');
-            $table->decimal('precio_presentacion', 10, 2)->after('cantidad_unitaria');
-            $table->decimal('cantidad_utilizada', 10, 2)->default(0)->after('precio_presentacion');
-            $table->decimal('cantidad_por_producto', 10, 2)->default(0)->after('cantidad_utilizada');
-            $table->decimal('stock_minimo', 10, 2)->default(0)->after('cantidad_por_producto');
+            $table->decimal('cantidad_unitaria', 10, 0)->after('unidad');
+            $table->decimal('precio_presentacion', 10, 0)->after('cantidad_unitaria');
+            $table->decimal('cantidad_utilizada', 10, 0)->default(0)->after('precio_presentacion');
+            $table->decimal('cantidad_por_producto', 10, 0)->default(0)->after('cantidad_utilizada');
+            $table->decimal('stock_minimo', 10, 0)->default(0)->after('cantidad_por_producto');
             $table->string('sitio_referencia', 255)->nullable()->after('stock_minimo');
         });
     }

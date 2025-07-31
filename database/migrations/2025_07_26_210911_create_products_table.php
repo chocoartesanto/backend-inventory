@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre_producto')->comment('Nombre del producto');
             $table->string('variant')->nullable()->comment('Variante del producto');
-            $table->decimal('precio', 10, 2)->comment('Precio en COP');
+            $table->decimal('precio', 10, 0)->comment('Precio en COP');
             $table->text('description')->nullable();
             $table->unsignedBigInteger('categoria_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();

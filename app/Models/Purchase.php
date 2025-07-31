@@ -31,16 +31,6 @@ class Purchase extends Model
         'payment_reference',
     ];
 
-    protected $casts = [
-        'invoice_date' => 'date',
-        'has_delivery' => 'boolean',
-        'delivery_fee' => 'decimal:2',
-        'subtotal_products' => 'decimal:2',
-        'total_amount' => 'decimal:2',
-        'amount_paid' => 'decimal:2',
-        'change_returned' => 'decimal:2',
-    ];
-
     /**
      * Relación con los detalles de la compra
      */

@@ -1,0 +1,47 @@
+service: laravel-inventory
+
+provider:
+  name: aws
+  region: us-east-1
+  runtime: provided.al2
+  environment:
+    APP_ENV: production
+    APP_DEBUG: false
+    LOG_CHANNEL: stderr
+    DB_CONNECTION: mysql
+    DB_HOST: inventory.c858cws0y1hi.us-east-1.rds.amazonaws.com
+    DB_PORT: 3306
+    DB_DATABASE: inventory
+    DB_USERNAME: admin
+    DB_PASSWORD: Admin123#,
+    # Agregar estas variables importantes
+    APP_KEY: ${env:APP_KEY} # Asegúrate de tener esto definido
+    BREF_BINARY_RESPONSES: 1
+
+functions:
+  web:
+    handler: public/index.php
+    timeout: 28
+    layers:
+      - ${bref:layer.php-83-fpm}
+    events:
+      - httpApi: "*"
+
+  # Opcional: función para comandos Artisan
+  artisan:
+    handler: artisan
+    layers:
+      - ${bref:layer.php-83}
+    timeout: 120
+
+plugins:
+  - ./vendor/bref/bref
+
+package:
+  patterns:
+    - "!node_modules/**"
+    - "!storage/**"
+    - "!tests/**"
+    - "!.env*"
+    - "!phpunit.xml"
+    - "!.git/**"

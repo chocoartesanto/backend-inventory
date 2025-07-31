@@ -1,0 +1,1220 @@
+{
+  "/Users/jhordanandresasprillasolis/Desktop/inventory-v1/serverless.yml": {
+    "versionFramework": "4.17.2",
+    "servicePath": "/Users/jhordanandresasprillasolis/Desktop/inventory-v1/serverless.yml",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "service": "laravel-inventory",
+      "provider": {
+        "name": "aws",
+        "region": "us-east-1",
+        "runtime": "provided.al2",
+        "environment": {
+          "APP_ENV": "production",
+          "APP_DEBUG": "false",
+          "LOG_CHANNEL": "stderr",
+          "DB_CONNECTION": "mysql",
+          "DB_HOST": "inventory.c858cws0y1hi.us-east-1.rds.amazonaws.com",
+          "DB_PORT": "3306",
+          "DB_DATABASE": "inventory",
+          "DB_USERNAME": "admin",
+          "DB_PASSWORD": "<REDACTED>",
+          "APP_KEY": "base64:kZJ5z2+E0sRSI813fHnsuCRBydnmtGgc33oyEx8VYps=",
+          "BREF_BINARY_RESPONSES": "1"
+        },
+        "stage": "dev",
+        "versionFunctions": true,
+        "deploymentMethod": "direct",
+        "compiledCloudFormationTemplate": {
+          "AWSTemplateFormatVersion": "2010-09-09",
+          "Description": "The AWS CloudFormation template for this Serverless application",
+          "Resources": {
+            "WebLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/laravel-inventory-dev-web"
+              }
+            },
+            "ArtisanLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/laravel-inventory-dev-artisan"
+              }
+            },
+            "IamRoleLambdaExecution": {
+              "Type": "AWS::IAM::Role",
+              "Properties": {
+                "AssumeRolePolicyDocument": {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                    {
+                      "Effect": "Allow",
+                      "Principal": {
+                        "Service": [
+                          "lambda.amazonaws.com"
+                        ]
+                      },
+                      "Action": [
+                        "sts:AssumeRole"
+                      ]
+                    }
+                  ]
+                },
+                "Policies": [
+                  {
+                    "PolicyName": {
+                      "Fn::Join": [
+                        "-",
+                        [
+                          "laravel-inventory",
+                          "dev",
+                          "lambda"
+                        ]
+                      ]
+                    },
+                    "PolicyDocument": {
+                      "Version": "2012-10-17",
+                      "Statement": [
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "logs:CreateLogStream",
+                            "logs:CreateLogGroup",
+                            "logs:TagResource"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/laravel-inventory-dev*:*"
+                            }
+                          ]
+                        },
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "logs:PutLogEvents"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/laravel-inventory-dev*:*:*"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "Path": "/",
+                "RoleName": {
+                  "Fn::Join": [
+                    "-",
+                    [
+                      "laravel-inventory",
+                      "dev",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      "lambdaRole"
+                    ]
+                  ]
+                }
+              }
+            },
+            "WebLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-us-east-1-ccbaba3e-4e04",
+                  "S3Key": "serverless/laravel-inventory/dev/1753910105916-2025-07-30T21:15:05.916Z/laravel-inventory.zip"
+                },
+                "Handler": "public/index.php",
+                "Runtime": "provided.al2",
+                "FunctionName": "laravel-inventory-dev-web",
+                "MemorySize": 1024,
+                "Timeout": 28,
+                "Environment": {
+                  "Variables": {
+                    "APP_ENV": "production",
+                    "APP_DEBUG": "false",
+                    "LOG_CHANNEL": "stderr",
+                    "DB_CONNECTION": "mysql",
+                    "DB_HOST": "inventory.c858cws0y1hi.us-east-1.rds.amazonaws.com",
+                    "DB_PORT": "3306",
+                    "DB_DATABASE": "inventory",
+                    "DB_USERNAME": "admin",
+                    "DB_PASSWORD": "<REDACTED>",
+                    "APP_KEY": "base64:kZJ5z2+E0sRSI813fHnsuCRBydnmtGgc33oyEx8VYps=",
+                    "BREF_BINARY_RESPONSES": "1"
+                  }
+                },
+                "Role": {
+                  "Fn::GetAtt": [
+                    "IamRoleLambdaExecution",
+                    "Arn"
+                  ]
+                },
+                "Layers": [
+                  "arn:aws:lambda:us-east-1:534081306603:layer:php-83-fpm:57"
+                ]
+              },
+              "DependsOn": [
+                "WebLogGroup"
+              ]
+            },
+            "ArtisanLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-us-east-1-ccbaba3e-4e04",
+                  "S3Key": "serverless/laravel-inventory/dev/1753910105916-2025-07-30T21:15:05.916Z/laravel-inventory.zip"
+                },
+                "Handler": "artisan",
+                "Runtime": "provided.al2",
+                "FunctionName": "laravel-inventory-dev-artisan",
+                "MemorySize": 1024,
+                "Timeout": 120,
+                "Environment": {
+                  "Variables": {
+                    "APP_ENV": "production",
+                    "APP_DEBUG": "false",
+                    "LOG_CHANNEL": "stderr",
+                    "DB_CONNECTION": "mysql",
+                    "DB_HOST": "inventory.c858cws0y1hi.us-east-1.rds.amazonaws.com",
+                    "DB_PORT": "3306",
+                    "DB_DATABASE": "inventory",
+                    "DB_USERNAME": "admin",
+                    "DB_PASSWORD": "<REDACTED>",
+                    "APP_KEY": "base64:kZJ5z2+E0sRSI813fHnsuCRBydnmtGgc33oyEx8VYps=",
+                    "BREF_BINARY_RESPONSES": "1"
+                  }
+                },
+                "Role": {
+                  "Fn::GetAtt": [
+                    "IamRoleLambdaExecution",
+                    "Arn"
+                  ]
+                },
+                "Layers": [
+                  "arn:aws:lambda:us-east-1:534081306603:layer:php-83:57"
+                ]
+              },
+              "DependsOn": [
+                "ArtisanLogGroup"
+              ]
+            },
+            "WebLambdaVersionZ2nZzbGcWGgUJWHyeRJSwhUoWeBFh4HgvkF7jNDo": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "WebLambdaFunction"
+                },
+                "CodeSha256": "bwArI62gjaJjSAJUm0jd7yNGvHe8gV3lx0pB9nYqwKs="
+              }
+            },
+            "ArtisanLambdaVersionpIPdDHsZQq1bfmn3bWFwgjNoRNKN0SctDI32GPz6yE": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "ArtisanLambdaFunction"
+                },
+                "CodeSha256": "bwArI62gjaJjSAJUm0jd7yNGvHe8gV3lx0pB9nYqwKs="
+              }
+            },
+            "HttpApi": {
+              "Type": "AWS::ApiGatewayV2::Api",
+              "Properties": {
+                "Name": "dev-laravel-inventory",
+                "ProtocolType": "HTTP"
+              }
+            },
+            "HttpApiStage": {
+              "Type": "AWS::ApiGatewayV2::Stage",
+              "Properties": {
+                "ApiId": {
+                  "Ref": "HttpApi"
+                },
+                "StageName": "$default",
+                "AutoDeploy": true,
+                "DefaultRouteSettings": {
+                  "DetailedMetricsEnabled": false
+                }
+              }
+            },
+            "WebLambdaPermissionHttpApi": {
+              "Type": "AWS::Lambda::Permission",
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
+                    "WebLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "HttpApi"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              }
+            },
+            "HttpApiIntegrationWeb": {
+              "Type": "AWS::ApiGatewayV2::Integration",
+              "Properties": {
+                "ApiId": {
+                  "Ref": "HttpApi"
+                },
+                "IntegrationType": "AWS_PROXY",
+                "IntegrationUri": {
+                  "Fn::GetAtt": [
+                    "WebLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "PayloadFormatVersion": "2.0",
+                "TimeoutInMillis": 30000
+              }
+            },
+            "HttpApiRouteDefault": {
+              "Type": "AWS::ApiGatewayV2::Route",
+              "Properties": {
+                "ApiId": {
+                  "Ref": "HttpApi"
+                },
+                "RouteKey": "$default",
+                "Target": {
+                  "Fn::Join": [
+                    "/",
+                    [
+                      "integrations",
+                      {
+                        "Ref": "HttpApiIntegrationWeb"
+                      }
+                    ]
+                  ]
+                }
+              },
+              "DependsOn": "HttpApiIntegrationWeb"
+            }
+          },
+          "Outputs": {
+            "ServerlessDeploymentBucketName": {
+              "Value": "serverless-framework-deployments-us-east-1-ccbaba3e-4e04",
+              "Export": {
+                "Name": "sls-laravel-inventory-dev-ServerlessDeploymentBucketName"
+              }
+            },
+            "WebLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "WebLambdaVersionZ2nZzbGcWGgUJWHyeRJSwhUoWeBFh4HgvkF7jNDo"
+              },
+              "Export": {
+                "Name": "sls-laravel-inventory-dev-WebLambdaFunctionQualifiedArn"
+              }
+            },
+            "ArtisanLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "ArtisanLambdaVersionpIPdDHsZQq1bfmn3bWFwgjNoRNKN0SctDI32GPz6yE"
+              },
+              "Export": {
+                "Name": "sls-laravel-inventory-dev-ArtisanLambdaFunctionQualifiedArn"
+              }
+            },
+            "HttpApiId": {
+              "Description": "Id of the HTTP API",
+              "Value": {
+                "Ref": "HttpApi"
+              },
+              "Export": {
+                "Name": "sls-laravel-inventory-dev-HttpApiId"
+              }
+            },
+            "HttpApiUrl": {
+              "Description": "URL of the HTTP API",
+              "Value": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "https://",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    ".execute-api.",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ".",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    }
+                  ]
+                ]
+              },
+              "Export": {
+                "Name": "sls-laravel-inventory-dev-HttpApiUrl"
+              }
+            }
+          }
+        },
+        "vpc": {}
+      },
+      "functions": {
+        "web": {
+          "handler": "public/index.php",
+          "timeout": 28,
+          "layers": [
+            "arn:aws:lambda:us-east-1:534081306603:layer:php-83-fpm:57"
+          ],
+          "events": [
+            {
+              "httpApi": "*",
+              "resolvedMethod": "ANY"
+            }
+          ],
+          "name": "laravel-inventory-dev-web",
+          "package": {},
+          "memory": 1024,
+          "runtime": "provided.al2",
+          "vpc": {},
+          "versionLogicalId": "WebLambdaVersionZ2nZzbGcWGgUJWHyeRJSwhUoWeBFh4HgvkF7jNDo"
+        },
+        "artisan": {
+          "handler": "artisan",
+          "layers": [
+            "arn:aws:lambda:us-east-1:534081306603:layer:php-83:57"
+          ],
+          "timeout": 120,
+          "events": [],
+          "name": "laravel-inventory-dev-artisan",
+          "package": {},
+          "memory": 1024,
+          "runtime": "provided.al2",
+          "vpc": {},
+          "versionLogicalId": "ArtisanLambdaVersionpIPdDHsZQq1bfmn3bWFwgjNoRNKN0SctDI32GPz6yE"
+        }
+      },
+      "plugins": [
+        "./vendor/bref/bref"
+      ],
+      "package": {
+        "patterns": [
+          "!node_modules/**",
+          "!storage/**",
+          "!tests/**",
+          "!.env*",
+          "!phpunit.xml",
+          "!.git/**"
+        ],
+        "artifactsS3KeyDirname": "serverless/laravel-inventory/dev/code-artifacts",
+        "deploymentBucket": "serverless-framework-deployments-us-east-1-ccbaba3e-4e04",
+        "artifact": "/Users/jhordanandresasprillasolis/Desktop/inventory-v1/.serverless/laravel-inventory.zip",
+        "artifactDirectoryName": "serverless/laravel-inventory/dev/1753910105916-2025-07-30T21:15:05.916Z"
+      }
+    },
+    "provider": {
+      "name": "aws",
+      "region": "us-east-1",
+      "runtime": "provided.al2",
+      "environment": {
+        "APP_ENV": "production",
+        "APP_DEBUG": "false",
+        "LOG_CHANNEL": "stderr",
+        "DB_CONNECTION": "mysql",
+        "DB_HOST": "inventory.c858cws0y1hi.us-east-1.rds.amazonaws.com",
+        "DB_PORT": "3306",
+        "DB_DATABASE": "inventory",
+        "DB_USERNAME": "admin",
+        "DB_PASSWORD": "<REDACTED>",
+        "APP_KEY": "base64:kZJ5z2+E0sRSI813fHnsuCRBydnmtGgc33oyEx8VYps=",
+        "BREF_BINARY_RESPONSES": "1"
+      },
+      "stage": "dev",
+      "versionFunctions": true,
+      "deploymentMethod": "direct",
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "WebLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/laravel-inventory-dev-web"
+            }
+          },
+          "ArtisanLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/laravel-inventory-dev-artisan"
+            }
+          },
+          "IamRoleLambdaExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                        "lambda.amazonaws.com"
+                      ]
+                    },
+                    "Action": [
+                      "sts:AssumeRole"
+                    ]
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": {
+                    "Fn::Join": [
+                      "-",
+                      [
+                        "laravel-inventory",
+                        "dev",
+                        "lambda"
+                      ]
+                    ]
+                  },
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:CreateLogStream",
+                          "logs:CreateLogGroup",
+                          "logs:TagResource"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/laravel-inventory-dev*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:PutLogEvents"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/laravel-inventory-dev*:*:*"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "Path": "/",
+              "RoleName": {
+                "Fn::Join": [
+                  "-",
+                  [
+                    "laravel-inventory",
+                    "dev",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    "lambdaRole"
+                  ]
+                ]
+              }
+            }
+          },
+          "WebLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-us-east-1-ccbaba3e-4e04",
+                "S3Key": "serverless/laravel-inventory/dev/1753910105916-2025-07-30T21:15:05.916Z/laravel-inventory.zip"
+              },
+              "Handler": "public/index.php",
+              "Runtime": "provided.al2",
+              "FunctionName": "laravel-inventory-dev-web",
+              "MemorySize": 1024,
+              "Timeout": 28,
+              "Environment": {
+                "Variables": {
+                  "APP_ENV": "production",
+                  "APP_DEBUG": "false",
+                  "LOG_CHANNEL": "stderr",
+                  "DB_CONNECTION": "mysql",
+                  "DB_HOST": "inventory.c858cws0y1hi.us-east-1.rds.amazonaws.com",
+                  "DB_PORT": "3306",
+                  "DB_DATABASE": "inventory",
+                  "DB_USERNAME": "admin",
+                  "DB_PASSWORD": "<REDACTED>",
+                  "APP_KEY": "base64:kZJ5z2+E0sRSI813fHnsuCRBydnmtGgc33oyEx8VYps=",
+                  "BREF_BINARY_RESPONSES": "1"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Layers": [
+                "arn:aws:lambda:us-east-1:534081306603:layer:php-83-fpm:57"
+              ]
+            },
+            "DependsOn": [
+              "WebLogGroup"
+            ]
+          },
+          "ArtisanLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-us-east-1-ccbaba3e-4e04",
+                "S3Key": "serverless/laravel-inventory/dev/1753910105916-2025-07-30T21:15:05.916Z/laravel-inventory.zip"
+              },
+              "Handler": "artisan",
+              "Runtime": "provided.al2",
+              "FunctionName": "laravel-inventory-dev-artisan",
+              "MemorySize": 1024,
+              "Timeout": 120,
+              "Environment": {
+                "Variables": {
+                  "APP_ENV": "production",
+                  "APP_DEBUG": "false",
+                  "LOG_CHANNEL": "stderr",
+                  "DB_CONNECTION": "mysql",
+                  "DB_HOST": "inventory.c858cws0y1hi.us-east-1.rds.amazonaws.com",
+                  "DB_PORT": "3306",
+                  "DB_DATABASE": "inventory",
+                  "DB_USERNAME": "admin",
+                  "DB_PASSWORD": "<REDACTED>",
+                  "APP_KEY": "base64:kZJ5z2+E0sRSI813fHnsuCRBydnmtGgc33oyEx8VYps=",
+                  "BREF_BINARY_RESPONSES": "1"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Layers": [
+                "arn:aws:lambda:us-east-1:534081306603:layer:php-83:57"
+              ]
+            },
+            "DependsOn": [
+              "ArtisanLogGroup"
+            ]
+          },
+          "WebLambdaVersionZ2nZzbGcWGgUJWHyeRJSwhUoWeBFh4HgvkF7jNDo": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "WebLambdaFunction"
+              },
+              "CodeSha256": "bwArI62gjaJjSAJUm0jd7yNGvHe8gV3lx0pB9nYqwKs="
+            }
+          },
+          "ArtisanLambdaVersionpIPdDHsZQq1bfmn3bWFwgjNoRNKN0SctDI32GPz6yE": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "ArtisanLambdaFunction"
+              },
+              "CodeSha256": "bwArI62gjaJjSAJUm0jd7yNGvHe8gV3lx0pB9nYqwKs="
+            }
+          },
+          "HttpApi": {
+            "Type": "AWS::ApiGatewayV2::Api",
+            "Properties": {
+              "Name": "dev-laravel-inventory",
+              "ProtocolType": "HTTP"
+            }
+          },
+          "HttpApiStage": {
+            "Type": "AWS::ApiGatewayV2::Stage",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "StageName": "$default",
+              "AutoDeploy": true,
+              "DefaultRouteSettings": {
+                "DetailedMetricsEnabled": false
+              }
+            }
+          },
+          "WebLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "WebLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationWeb": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "Fn::GetAtt": [
+                  "WebLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRouteDefault": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "$default",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationWeb"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationWeb"
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": "serverless-framework-deployments-us-east-1-ccbaba3e-4e04",
+            "Export": {
+              "Name": "sls-laravel-inventory-dev-ServerlessDeploymentBucketName"
+            }
+          },
+          "WebLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "WebLambdaVersionZ2nZzbGcWGgUJWHyeRJSwhUoWeBFh4HgvkF7jNDo"
+            },
+            "Export": {
+              "Name": "sls-laravel-inventory-dev-WebLambdaFunctionQualifiedArn"
+            }
+          },
+          "ArtisanLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "ArtisanLambdaVersionpIPdDHsZQq1bfmn3bWFwgjNoRNKN0SctDI32GPz6yE"
+            },
+            "Export": {
+              "Name": "sls-laravel-inventory-dev-ArtisanLambdaFunctionQualifiedArn"
+            }
+          },
+          "HttpApiId": {
+            "Description": "Id of the HTTP API",
+            "Value": {
+              "Ref": "HttpApi"
+            },
+            "Export": {
+              "Name": "sls-laravel-inventory-dev-HttpApiId"
+            }
+          },
+          "HttpApiUrl": {
+            "Description": "URL of the HTTP API",
+            "Value": {
+              "Fn::Join": [
+                "",
+                [
+                  "https://",
+                  {
+                    "Ref": "HttpApi"
+                  },
+                  ".execute-api.",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ".",
+                  {
+                    "Ref": "AWS::URLSuffix"
+                  }
+                ]
+              ]
+            },
+            "Export": {
+              "Name": "sls-laravel-inventory-dev-HttpApiUrl"
+            }
+          }
+        }
+      },
+      "vpc": {}
+    },
+    "dashboard": {
+      "isEnabledForService": false,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": null,
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": null,
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "serviceRawFile": "service: laravel-inventory\n\nprovider:\n  name: aws\n  region: us-east-1\n  runtime: provided.al2\n  environment:\n    APP_ENV: production\n    APP_DEBUG: false\n    LOG_CHANNEL: stderr\n    DB_CONNECTION: mysql\n    DB_HOST: inventory.c858cws0y1hi.us-east-1.rds.amazonaws.com\n    DB_PORT: 3306\n    DB_DATABASE: inventory\n    DB_USERNAME: admin\n    DB_PASSWORD: Admin123#,\n    # Agregar estas variables importantes\n    APP_KEY: ${env:APP_KEY} # Asegúrate de tener esto definido\n    BREF_BINARY_RESPONSES: 1\n\nfunctions:\n  web:\n    handler: public/index.php\n    timeout: 28\n    layers:\n      - ${bref:layer.php-83-fpm}\n    events:\n      - httpApi: \"*\"\n\n  # Opcional: función para comandos Artisan\n  artisan:\n    handler: artisan\n    layers:\n      - ${bref:layer.php-83}\n    timeout: 120\n\nplugins:\n  - ./vendor/bref/bref\n\npackage:\n  patterns:\n    - \"!node_modules/**\"\n    - \"!storage/**\"\n    - \"!tests/**\"\n    - \"!.env*\"\n    - \"!phpunit.xml\"\n    - \"!.git/**\"\n",
+    "command": [
+      "deploy"
+    ],
+    "options": {},
+    "orgId": "2e79d387-9e15-4313-a4be-a5a1e42c7c5a",
+    "orgName": "miapp",
+    "userId": "d9Pqxgm3br5QvhLnkx",
+    "userName": "miapp",
+    "serviceProviderAwsAccountId": "124695120882",
+    "serviceProviderAwsCfStackName": "laravel-inventory-dev",
+    "serviceProviderAwsCfStackId": "arn:aws:cloudformation:us-east-1:124695120882:stack/laravel-inventory-dev/66505320-6d8a-11f0-b794-0ed0135cae3f",
+    "serviceProviderAwsCfStackCreated": "2025-07-30T21:16:03.900Z",
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": "CREATE_COMPLETE",
+    "serviceProviderAwsCfStackOutputs": [
+      {
+        "OutputKey": "WebLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-1:124695120882:function:laravel-inventory-dev-web:2",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-laravel-inventory-dev-WebLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "HttpApiId",
+        "OutputValue": "3jk6wp5183",
+        "Description": "Id of the HTTP API",
+        "ExportName": "sls-laravel-inventory-dev-HttpApiId"
+      },
+      {
+        "OutputKey": "ArtisanLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-1:124695120882:function:laravel-inventory-dev-artisan:2",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-laravel-inventory-dev-ArtisanLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "ServerlessDeploymentBucketName",
+        "OutputValue": "serverless-framework-deployments-us-east-1-ccbaba3e-4e04",
+        "ExportName": "sls-laravel-inventory-dev-ServerlessDeploymentBucketName"
+      },
+      {
+        "OutputKey": "HttpApiUrl",
+        "OutputValue": "https://3jk6wp5183.execute-api.us-east-1.amazonaws.com",
+        "Description": "URL of the HTTP API",
+        "ExportName": "sls-laravel-inventory-dev-HttpApiUrl"
+      }
+    ],
+    "compiledCloudFormationTemplate": {
+      "AWSTemplateFormatVersion": "2010-09-09",
+      "Description": "The AWS CloudFormation template for this Serverless application",
+      "Resources": {
+        "WebLogGroup": {
+          "Type": "AWS::Logs::LogGroup",
+          "Properties": {
+            "LogGroupName": "/aws/lambda/laravel-inventory-dev-web"
+          }
+        },
+        "ArtisanLogGroup": {
+          "Type": "AWS::Logs::LogGroup",
+          "Properties": {
+            "LogGroupName": "/aws/lambda/laravel-inventory-dev-artisan"
+          }
+        },
+        "IamRoleLambdaExecution": {
+          "Type": "AWS::IAM::Role",
+          "Properties": {
+            "AssumeRolePolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Principal": {
+                    "Service": [
+                      "lambda.amazonaws.com"
+                    ]
+                  },
+                  "Action": [
+                    "sts:AssumeRole"
+                  ]
+                }
+              ]
+            },
+            "Policies": [
+              {
+                "PolicyName": {
+                  "Fn::Join": [
+                    "-",
+                    [
+                      "laravel-inventory",
+                      "dev",
+                      "lambda"
+                    ]
+                  ]
+                },
+                "PolicyDocument": {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                    {
+                      "Effect": "Allow",
+                      "Action": [
+                        "logs:CreateLogStream",
+                        "logs:CreateLogGroup",
+                        "logs:TagResource"
+                      ],
+                      "Resource": [
+                        {
+                          "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/laravel-inventory-dev*:*"
+                        }
+                      ]
+                    },
+                    {
+                      "Effect": "Allow",
+                      "Action": [
+                        "logs:PutLogEvents"
+                      ],
+                      "Resource": [
+                        {
+                          "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/laravel-inventory-dev*:*:*"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ],
+            "Path": "/",
+            "RoleName": {
+              "Fn::Join": [
+                "-",
+                [
+                  "laravel-inventory",
+                  "dev",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  "lambdaRole"
+                ]
+              ]
+            }
+          }
+        },
+        "WebLambdaFunction": {
+          "Type": "AWS::Lambda::Function",
+          "Properties": {
+            "Code": {
+              "S3Bucket": "serverless-framework-deployments-us-east-1-ccbaba3e-4e04",
+              "S3Key": "serverless/laravel-inventory/dev/1753910105916-2025-07-30T21:15:05.916Z/laravel-inventory.zip"
+            },
+            "Handler": "public/index.php",
+            "Runtime": "provided.al2",
+            "FunctionName": "laravel-inventory-dev-web",
+            "MemorySize": 1024,
+            "Timeout": 28,
+            "Environment": {
+              "Variables": {
+                "APP_ENV": "production",
+                "APP_DEBUG": "false",
+                "LOG_CHANNEL": "stderr",
+                "DB_CONNECTION": "mysql",
+                "DB_HOST": "inventory.c858cws0y1hi.us-east-1.rds.amazonaws.com",
+                "DB_PORT": "3306",
+                "DB_DATABASE": "inventory",
+                "DB_USERNAME": "admin",
+                "DB_PASSWORD": "<REDACTED>",
+                "APP_KEY": "base64:kZJ5z2+E0sRSI813fHnsuCRBydnmtGgc33oyEx8VYps=",
+                "BREF_BINARY_RESPONSES": "1"
+              }
+            },
+            "Role": {
+              "Fn::GetAtt": [
+                "IamRoleLambdaExecution",
+                "Arn"
+              ]
+            },
+            "Layers": [
+              "arn:aws:lambda:us-east-1:534081306603:layer:php-83-fpm:57"
+            ]
+          },
+          "DependsOn": [
+            "WebLogGroup"
+          ]
+        },
+        "ArtisanLambdaFunction": {
+          "Type": "AWS::Lambda::Function",
+          "Properties": {
+            "Code": {
+              "S3Bucket": "serverless-framework-deployments-us-east-1-ccbaba3e-4e04",
+              "S3Key": "serverless/laravel-inventory/dev/1753910105916-2025-07-30T21:15:05.916Z/laravel-inventory.zip"
+            },
+            "Handler": "artisan",
+            "Runtime": "provided.al2",
+            "FunctionName": "laravel-inventory-dev-artisan",
+            "MemorySize": 1024,
+            "Timeout": 120,
+            "Environment": {
+              "Variables": {
+                "APP_ENV": "production",
+                "APP_DEBUG": "false",
+                "LOG_CHANNEL": "stderr",
+                "DB_CONNECTION": "mysql",
+                "DB_HOST": "inventory.c858cws0y1hi.us-east-1.rds.amazonaws.com",
+                "DB_PORT": "3306",
+                "DB_DATABASE": "inventory",
+                "DB_USERNAME": "admin",
+                "DB_PASSWORD": "<REDACTED>",
+                "APP_KEY": "base64:kZJ5z2+E0sRSI813fHnsuCRBydnmtGgc33oyEx8VYps=",
+                "BREF_BINARY_RESPONSES": "1"
+              }
+            },
+            "Role": {
+              "Fn::GetAtt": [
+                "IamRoleLambdaExecution",
+                "Arn"
+              ]
+            },
+            "Layers": [
+              "arn:aws:lambda:us-east-1:534081306603:layer:php-83:57"
+            ]
+          },
+          "DependsOn": [
+            "ArtisanLogGroup"
+          ]
+        },
+        "WebLambdaVersionZ2nZzbGcWGgUJWHyeRJSwhUoWeBFh4HgvkF7jNDo": {
+          "Type": "AWS::Lambda::Version",
+          "DeletionPolicy": "Retain",
+          "Properties": {
+            "FunctionName": {
+              "Ref": "WebLambdaFunction"
+            },
+            "CodeSha256": "bwArI62gjaJjSAJUm0jd7yNGvHe8gV3lx0pB9nYqwKs="
+          }
+        },
+        "ArtisanLambdaVersionpIPdDHsZQq1bfmn3bWFwgjNoRNKN0SctDI32GPz6yE": {
+          "Type": "AWS::Lambda::Version",
+          "DeletionPolicy": "Retain",
+          "Properties": {
+            "FunctionName": {
+              "Ref": "ArtisanLambdaFunction"
+            },
+            "CodeSha256": "bwArI62gjaJjSAJUm0jd7yNGvHe8gV3lx0pB9nYqwKs="
+          }
+        },
+        "HttpApi": {
+          "Type": "AWS::ApiGatewayV2::Api",
+          "Properties": {
+            "Name": "dev-laravel-inventory",
+            "ProtocolType": "HTTP"
+          }
+        },
+        "HttpApiStage": {
+          "Type": "AWS::ApiGatewayV2::Stage",
+          "Properties": {
+            "ApiId": {
+              "Ref": "HttpApi"
+            },
+            "StageName": "$default",
+            "AutoDeploy": true,
+            "DefaultRouteSettings": {
+              "DetailedMetricsEnabled": false
+            }
+          }
+        },
+        "WebLambdaPermissionHttpApi": {
+          "Type": "AWS::Lambda::Permission",
+          "Properties": {
+            "FunctionName": {
+              "Fn::GetAtt": [
+                "WebLambdaFunction",
+                "Arn"
+              ]
+            },
+            "Action": "lambda:InvokeFunction",
+            "Principal": "apigateway.amazonaws.com",
+            "SourceArn": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:",
+                  {
+                    "Ref": "AWS::Partition"
+                  },
+                  ":execute-api:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":",
+                  {
+                    "Ref": "HttpApi"
+                  },
+                  "/*"
+                ]
+              ]
+            }
+          }
+        },
+        "HttpApiIntegrationWeb": {
+          "Type": "AWS::ApiGatewayV2::Integration",
+          "Properties": {
+            "ApiId": {
+              "Ref": "HttpApi"
+            },
+            "IntegrationType": "AWS_PROXY",
+            "IntegrationUri": {
+              "Fn::GetAtt": [
+                "WebLambdaFunction",
+                "Arn"
+              ]
+            },
+            "PayloadFormatVersion": "2.0",
+            "TimeoutInMillis": 30000
+          }
+        },
+        "HttpApiRouteDefault": {
+          "Type": "AWS::ApiGatewayV2::Route",
+          "Properties": {
+            "ApiId": {
+              "Ref": "HttpApi"
+            },
+            "RouteKey": "$default",
+            "Target": {
+              "Fn::Join": [
+                "/",
+                [
+                  "integrations",
+                  {
+                    "Ref": "HttpApiIntegrationWeb"
+                  }
+                ]
+              ]
+            }
+          },
+          "DependsOn": "HttpApiIntegrationWeb"
+        }
+      },
+      "Outputs": {
+        "ServerlessDeploymentBucketName": {
+          "Value": "serverless-framework-deployments-us-east-1-ccbaba3e-4e04",
+          "Export": {
+            "Name": "sls-laravel-inventory-dev-ServerlessDeploymentBucketName"
+          }
+        },
+        "WebLambdaFunctionQualifiedArn": {
+          "Description": "Current Lambda function version",
+          "Value": {
+            "Ref": "WebLambdaVersionZ2nZzbGcWGgUJWHyeRJSwhUoWeBFh4HgvkF7jNDo"
+          },
+          "Export": {
+            "Name": "sls-laravel-inventory-dev-WebLambdaFunctionQualifiedArn"
+          }
+        },
+        "ArtisanLambdaFunctionQualifiedArn": {
+          "Description": "Current Lambda function version",
+          "Value": {
+            "Ref": "ArtisanLambdaVersionpIPdDHsZQq1bfmn3bWFwgjNoRNKN0SctDI32GPz6yE"
+          },
+          "Export": {
+            "Name": "sls-laravel-inventory-dev-ArtisanLambdaFunctionQualifiedArn"
+          }
+        },
+        "HttpApiId": {
+          "Description": "Id of the HTTP API",
+          "Value": {
+            "Ref": "HttpApi"
+          },
+          "Export": {
+            "Name": "sls-laravel-inventory-dev-HttpApiId"
+          }
+        },
+        "HttpApiUrl": {
+          "Description": "URL of the HTTP API",
+          "Value": {
+            "Fn::Join": [
+              "",
+              [
+                "https://",
+                {
+                  "Ref": "HttpApi"
+                },
+                ".execute-api.",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ".",
+                {
+                  "Ref": "AWS::URLSuffix"
+                }
+              ]
+            ]
+          },
+          "Export": {
+            "Name": "sls-laravel-inventory-dev-HttpApiUrl"
+          }
+        }
+      }
+    }
+  }
+}

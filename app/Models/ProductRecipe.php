@@ -16,7 +16,7 @@ class ProductRecipe extends Model
     ];
 
     protected $casts = [
-        'cantidad' => 'decimal:3'
+        'cantidad' => 'decimal:2'
     ];
 
     /**

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('username', 50)->unique();
             $table->string('email')->unique();
-            // $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password'); // Mantenemos 'password' (Laravel estándar)
             $table->unsignedBigInteger('role_id')->default(2);
             $table->boolean('is_active')->default(true);

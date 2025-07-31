@@ -20,11 +20,11 @@ return new class extends Migration
             $table->boolean('has_delivery')->default(false);
             $table->text('delivery_address')->nullable();
             $table->string('delivery_person')->nullable();
-            $table->decimal('delivery_fee', 10, 2)->default(0);
-            $table->decimal('subtotal_products', 10, 2);
-            $table->decimal('total_amount', 10, 2);
-            $table->decimal('amount_paid', 10, 2);
-            $table->decimal('change_returned', 10, 2);
+            $table->decimal('delivery_fee', 10, 0)->default(0);
+            $table->decimal('subtotal_products', 10, 0);
+            $table->decimal('total_amount', 10, 0);
+            $table->decimal('amount_paid', 10, 0);
+            $table->decimal('change_returned', 10, 0);
             $table->string('payment_method');
             $table->string('payment_reference')->nullable();
             $table->boolean('is_cancelled')->default(false);

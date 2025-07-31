@@ -21,12 +21,11 @@ class Product extends Model
         'min_stock'
     ];
 
-    protected $casts = [
-        'is_active' => 'boolean',
-        'precio' => 'decimal:2',
-        'stock_quantity' => 'integer',
-        'min_stock' => 'integer'
-    ];
+    // protected $casts = [
+    //     'precio_venta' => 'decimal:2',
+    //     'costo_produccion' => 'decimal:2',
+    //     'stock' => 'decimal:2'
+    // ];
 
     // ✅ Accessors/Mutators corregidos
     public function getVarianteAttribute()

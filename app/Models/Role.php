@@ -1,5 +1,4 @@
 <?php
-// app/Models/Role.php
 
 namespace App\Models;
 
@@ -15,6 +14,9 @@ class Role extends Model
         'description',
     ];
 
+    /**
+     * Relación con usuarios
+     */
     public function users()
     {
         return $this->hasMany(User::class);

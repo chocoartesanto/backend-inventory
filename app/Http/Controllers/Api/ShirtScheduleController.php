@@ -43,7 +43,9 @@ class ShirtScheduleController extends Controller
             return response()->json([
                 'success' => true,
                 'schedule' => $finalSchedule,
-                'updated_at' => $updateInfo ? $updateInfo->updated_at->format('Y-m-d H:i:s') : null,
+                'updated_at' => $updateInfo ? ($updateInfo->updated_at instanceof \Carbon\Carbon 
+                    ? $updateInfo->updated_at->format('Y-m-d H:i:s') 
+                    : \Carbon\Carbon::parse($updateInfo->updated_at)->format('Y-m-d H:i:s')) : null,
                 'updated_by' => $updateInfo ? $updateInfo->updated_by : null
             ]);
 

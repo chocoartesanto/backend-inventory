@@ -17,8 +17,7 @@ class UserPermission extends Model
     ];
 
     protected $casts = [
-        'facturar' => 'boolean',
-        'verVentas' => 'boolean',
+        'is_active' => 'boolean'
     ];
 
     /**

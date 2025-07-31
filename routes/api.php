@@ -18,15 +18,15 @@ use App\Http\Controllers\Api\StatisticsController;
 use App\Http\Controllers\Api\PDFController;
 /*
 |--------------------------------------------------------------------------
-| API Routes si
+| API Routes
 |--------------------------------------------------------------------------
 */
 
 // Ruta raíz de la API
 Route::get('/', function () {
     return response()->json([
-        'message' => '¡Bienvenido a la API de Inventario de Heladería!',
-        'version' => '1.0.0',
+        'message' => '¡Bienvenido a la API de Inventario de Heladería!    ',
+        'version' => '1.0.  0',
         'status' => 'active'
     ]);
 });
@@ -302,6 +302,27 @@ Route::prefix('v1')->group(function () {
                 // Generar reporte de muestra (útil para testing)
                 Route::get('/sample-report', [PDFController::class, 'generateSampleReport']);
             });
+
+
+
+            Route::prefix('services/statistics')->group(function () {
+                // Estadísticas generales de la aplicación
+                Route::get('/', [StatisticsController::class, 'index']);
+                
+                // Estadísticas por tiempo (day, week, month, year)
+                Route::get('/ventas-por-tiempo/{time_range}', [StatisticsController::class, 'getSalesByTime']);
+                
+                // Productos más vendidos
+                Route::get('/productos-top', [StatisticsController::class, 'getTopProducts']);
+                
+                // Métricas de entrega y servicio
+                Route::get('/metricas-entrega', [StatisticsController::class, 'getDeliveryMetrics']);
+                
+                // Resumen de ventas por fecha
+                Route::get('/sales-summary-by-date', [StatisticsController::class, 'getSalesSummaryByDate']);
+            });
+            
+            
 
 
         // Aquí puedes agregar más rutas protegidas en el futuro...

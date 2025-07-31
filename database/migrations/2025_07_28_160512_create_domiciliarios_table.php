@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre', 100);
             $table->string('telefono', 20)->unique();
-            $table->decimal('tarifa', 10, 2);
+            $table->decimal('tarifa', 10, 0);
             $table->timestamps();
         });
     }

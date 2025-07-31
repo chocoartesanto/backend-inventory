@@ -11,9 +11,14 @@ class ShirtSchedule extends Model
 
     protected $table = 'shirt_schedule';
     
-    // No usar timestamps automáticos de Laravel, usar los personalizados
-    public $timestamps = false;
+    // Habilitar timestamps
+    public $timestamps = true;
     
+    protected $casts = [
+        'updated_at' => 'datetime',
+        'created_at' => 'datetime'
+    ];
+
     protected $primaryKey = 'day';
     public $incrementing = false;
     protected $keyType = 'string';
@@ -26,9 +31,13 @@ class ShirtSchedule extends Model
         'updated_by'
     ];
 
-    protected $casts = [
-        'updated_at' => 'datetime',
-    ];
+    // protected $casts = [
+    //     'cantidad' => 'decimal:2',
+    //     'precio_unitario' => 'decimal:2',
+    //     'subtotal' => 'decimal:2',
+    //     'fecha_inicio' => 'date',
+    //     'fecha_fin' => 'date'
+    // ];
 
     // Definir los días por defecto
     public static function getDefaultSchedule()
