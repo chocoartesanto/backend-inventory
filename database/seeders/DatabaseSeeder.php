@@ -1,5 +1,4 @@
 <?php
-// database/seeders/DatabaseSeeder.php
 
 namespace Database\Seeders;
 
@@ -13,10 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            RoleSeeder::class,
             SuperUserSeeder::class,
-            UserSeeder::class,
-            // Otros seeders si los hay
         ]);
     }
 }

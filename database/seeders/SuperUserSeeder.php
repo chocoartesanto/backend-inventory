@@ -5,14 +5,17 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Carbon\Carbon;
 
 class SuperUserSeeder extends Seeder
 {
-    public function run()
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
     {
         // Elimina al usuario si ya existe (por email o username)
-        DB::table('users')->where('email', 'admin@example.com')->orWhere('username', 'admin')->delete();
+        DB::table('users')->where('email', 'admin@example.com')
+            ->orWhere('username', 'admin')->delete();
     
         // Luego inserta de nuevo
         DB::table('users')->insert([
@@ -22,9 +25,7 @@ class SuperUserSeeder extends Seeder
             'role_id' => 1,
             'is_active' => 1,
             'created_at' => now(),
-            'updated_at' => now()
+            'updated_at' => now(),
         ]);
     }
-    
 }
-
