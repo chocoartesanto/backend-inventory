@@ -87,9 +87,9 @@
 // 'payment_method' => 'required|string',
 // 'payment_reference' => 'nullable|string',
 // 'products' => 'required|array|min:1',
-// 'products._.product_name' => 'required|string',
-// 'products._.product_variant' => 'nullable|string',
-// 'products._.quantity' => 'required|numeric|min:1',
+// 'products._.product*name' => 'required|string',
+// 'products.*.product*variant' => 'nullable|string',
+// 'products.*.quantity' => 'required|numeric|min:1',
 // 'products._.unit_price' => 'required|numeric|min:0',
 // 'products._.subtotal' => 'required|numeric|min:0',
 // ]);
@@ -703,3 +703,13 @@
 // }
 
 // }
+
+MYSQL_DATABASE="railway"
+MYSQL_PUBLIC_URL="mysql://root:xKQeSaORheNwTYUdpgHJtvipiKNVrciT@maglev.proxy.rlwy.net:32268/railway"
+MYSQL_ROOT_PASSWORD="xKQeSaORheNwTYUdpgHJtvipiKNVrciT"
+MYSQL_URL="mysql://root:xKQeSaORheNwTYUdpgHJtvipiKNVrciT@mysql.railway.internal:3306/railway"
+MYSQLDATABASE="railway"
+MYSQLHOST="mysql.railway.internal"
+MYSQLPASSWORD="xKQeSaORheNwTYUdpgHJtvipiKNVrciT"
+MYSQLPORT="3306"
+MYSQLUSER="root"
