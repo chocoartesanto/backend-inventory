@@ -44,10 +44,10 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            // 'url' => env('DB_URL'),
-            // 'host' => env('DB_HOST', 'inventory.c858cws0y1hi.us-east-1.rds.amazonaws.com'),
-            // 'port' => env('DB_PORT', '3306'),
-            // 'database' => env('DB_DATABASE', 'inventory'),
+            'url' => env('DB_URL'),
+            'host' => env('DB_HOST', 'inventory.c858cws0y1hi.us-east-1.rds.amazonaws.com'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'inventory'),
             'username' => env('DB_USERNAME', 'admin'),
             'password' => env('DB_PASSWORD', 'Admin123#,'),
             'unix_socket' => env('DB_SOCKET', ''),
@@ -161,12 +161,12 @@ return [
         // ],
 
         // 'cache' => [
-            'url' => env('REDIS_URL'),
-            'host' => env('REDIS_HOST', '127.0.0.1'),
-            'username' => env('REDIS_USERNAME'),
-            'password' => env('REDIS_PASSWORD'),
-            'port' => env('REDIS_PORT', '6379'),
-            'database' => env('REDIS_CACHE_DB', '1'),
+            // 'url' => env('REDIS_URL'),
+            // 'host' => env('REDIS_HOST', '127.0.0.1'),
+            // 'username' => env('REDIS_USERNAME'),
+            // 'password' => env('REDIS_PASSWORD'),
+            // 'port' => env('REDIS_PORT', '6379'),
+            // 'database' => env('REDIS_CACHE_DB', '1'),
         // ],
 
     ],
