@@ -25,7 +25,7 @@ use App\Http\Controllers\Api\PDFController;
 // Ruta raíz de la API
 Route::get('/', function () {
     return response()->json([
-        'message' => '¡Bienvenido a la API de Inventario de Heladería!    ',
+        'message' => '¡Bienvenido a la API de Inventario de Heladería !    ',
         'version' => '1.0.  0',
         'status' => 'active'
     ]);
